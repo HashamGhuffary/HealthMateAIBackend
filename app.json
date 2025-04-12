@@ -1,0 +1,37 @@
+{
+  "name": "HealthMateAI",
+  "description": "AI-powered healthcare platform",
+  "repository": "https://github.com/HashamGhuffary/HealthMateAIBackend",
+  "keywords": ["django", "python", "healthcare", "ai"],
+  "addons": [
+    "heroku-postgresql:hobby-dev",
+    "heroku-redis:hobby-dev"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "env": {
+    "SECRET_KEY": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
+    "DEBUG": {
+      "description": "Set to False in production.",
+      "value": "False"
+    },
+    "OPENAI_API_KEY": {
+      "description": "Your OpenAI API key",
+      "required": true
+    },
+    "DISABLE_COLLECTSTATIC": {
+      "description": "Disable collectstatic during build if you use whitenoise",
+      "value": "0"
+    }
+  },
+  "scripts": {
+    "postdeploy": "python manage.py migrate && python manage.py collectstatic --noinput"
+  },
+  "success_url": "/"
+} 
